@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fieldstone — Risk Management for Architecture Firms</title>
+  <meta name="description" content="Fieldstone monitors storage, security, backups, licensing, and operational risks across your firm's tools — and sends a daily digest to your inbox every morning.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a1a; background: white; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Nav */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: white; z-index: 100; }
+    .nav-brand { font-size: 17px; font-weight: 600; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; font-size: 14px; color: #666; }
+    .nav-links a:hover { color: #1a1a1a; }
+    .nav-cta { background: #1a1a1a; color: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; }
+    .nav-cta:hover { background: #333; }
+
+    /* Hero */
+    .hero { max-width: 900px; margin: 0 auto; padding: 5rem 2rem 4rem; text-align: center; }
+    .hero-badge { display: inline-block; background: #f5f5f5; color: #666; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: 48px; font-weight: 600; line-height: 1.15; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+    .hero h1 span { color: #666; }
+    .hero p { font-size: 18px; color: #666; line-height: 1.7; max-width: 580px; margin: 0 auto 2rem; }
+    .hero-ctas { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .btn-primary { background: #1a1a1a; color: white; padding: 12px 24px; border-radius: 8px; font-size: 15px; font-weight: 500; display: inline-block; }
+    .btn-primary:hover { background: #333; }
+    .btn-secondary { background: white; color: #1a1a1a; padding: 12px 24px; border-radius: 8px; font-size: 15px; border: 1px solid #e5e5e5; display: inline-block; }
+    .btn-secondary:hover { background: #f5f5f5; }
+    .hero-note { font-size: 12px; color: #999; margin-top: 1rem; }
+
+    /* Dashboard preview */
+    .preview { max-width: 1000px; margin: 0 auto 5rem; padding: 0 2rem; }
+    .preview-inner { background: #f5f5f5; border-radius: 12px; padding: 2px; }
+    .preview-bar { background: #e5e5e5; border-radius: 10px 10px 0 0; padding: 10px 16px; display: flex; align-items: center; gap: 6px; }
+    .preview-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .preview-screen { background: white; border-radius: 0 0 10px 10px; padding: 1.5rem; }
+    .preview-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .preview-title { font-size: 16px; font-weight: 500; }
+    .preview-sync { font-size: 11px; color: #999; display: flex; align-items: center; gap: 5px; }
+    .preview-pulse { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+    .preview-metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1rem; }
+    .preview-metric { background: #f5f5f5; border-radius: 6px; padding: 10px 12px; }
+    .preview-metric-label { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+    .preview-metric-val { font-size: 18px; font-weight: 500; }
+    .preview-metric-sub { font-size: 9px; margin-top: 2px; }
+    .preview-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .preview-panel { border: 1px solid #e5e5e5; border-radius: 6px; padding: 10px 12px; }
+    .preview-panel-title { font-size: 11px; font-weight: 500; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .preview-badge { font-size: 9px; padding: 2px 6px; border-radius: 3px; }
+    .preview-badge-warn { background: #fef3c7; color: #d97706; }
+    .preview-badge-ok { background: #dcfce7; color: #16a34a; }
+    .preview-badge-danger { background: #fee2e2; color: #dc2626; }
+    .preview-prog-label { display: flex; justify-content: space-between; font-size: 9px; color: #999; margin-bottom: 2px; }
+    .preview-prog { height: 4px; border-radius: 2px; background: #f5f5f5; margin-bottom: 6px; overflow: hidden; }
+    .preview-prog-fill { height: 100%; border-radius: 2px; }
+    .preview-issue { display: flex; gap: 6px; margin-bottom: 6px; font-size: 10px; color: #444; align-items: flex-start; }
+    .preview-dot-sm { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+
+    /* How it works */
+    .section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .section h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .section p { font-size: 16px; color: #666; line-height: 1.7; max-width: 560px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+    .step { }
+    .step-num { width: 32px; height: 32px; border-radius: 8px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
+    .step h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+    .step p { font-size: 13px; color: #666; line-height: 1.6; }
+
+    /* Risk categories */
+    .categories { background: #f5f5f5; }
+    .categories-inner { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 2rem; }
+    .cat-card { background: white; border-radius: 8px; padding: 1.25rem; }
+    .cat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
+    .cat-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+    .cat-desc { font-size: 13px; color: #666; line-height: 1.6; }
+
+    /* Digest preview */
+    .digest-section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .digest-email { background: #f5f5f5; border-radius: 12px; padding: 2px; }
+    .digest-email-inner { background: white; border-radius: 10px; overflow: hidden; }
+    .digest-header { background: #1a1a1a; padding: 1rem 1.25rem; }
+    .digest-header-title { color: white; font-size: 14px; font-weight: 500; }
+    .digest-header-sub { color: #666; font-size: 11px; margin-top: 2px; }
+    .digest-body { padding: 1rem 1.25rem; }
+    .digest-section-title { font-size: 11px; font-weight: 500; margin-bottom: 8px; }
+    .digest-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 11px; }
+    .digest-row:last-child { border-bottom: none; }
+    .digest-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .digest-action { display: flex; gap: 6px; align-items: flex-start; padding: 6px 0; font-size: 11px; color: #444; }
+    .digest-cta { display: block; text-align: center; background: #1a1a1a; color: white; padding: 8px; border-radius: 6px; font-size: 11px; margin-top: 1rem; }
+
+    /* Pricing */
+    .pricing { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
+    .pricing h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .pricing p { font-size: 16px; color: #666; margin-bottom: 3rem; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 600px; margin: 0 auto; }
+    .pricing-card { border: 1px solid #e5e5e5; border-radius: 12px; padding: 2rem; text-align: left; }
+    .pricing-card.featured { border-color: #1a1a1a; }
+    .pricing-tier { font-size: 13px; font-weight: 500; color: #999; margin-bottom: 8px; }
+    .pricing-price { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .pricing-price span { font-size: 14px; font-weight: 400; color: #999; }
+    .pricing-desc { font-size: 13px; color: #666; margin-bottom: 1.5rem; line-height: 1.5; }
+    .pricing-features { list-style: none; margin-bottom: 1.5rem; }
+    .pricing-features li { font-size: 13px; color: #444; padding: 5px 0; display: flex; align-items: center; gap: 8px; }
+    .pricing-features li::before { content: "✓"; color: #16a34a; font-weight: 500; }
+    .pricing-btn { display: block; text-align: center; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 500; }
+    .pricing-btn-primary { background: #1a1a1a; color: white; }
+    .pricing-btn-primary:hover { background: #333; }
+    .pricing-btn-secondary { background: white; color: #1a1a1a; border: 1px solid #e5e5e5; }
+    .pricing-btn-secondary:hover { background: #f5f5f5; }
+    .pricing-note { font-size: 12px; color: #999; margin-top: 1.5rem; }
+
+    /* Deploy */
+    .deploy { background: #1a1a1a; }
+    .deploy-inner { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .deploy h2 { font-size: 28px; font-weight: 600; color: white; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .deploy p { font-size: 15px; color: #999; line-height: 1.7; margin-bottom: 1.5rem; }
+    .deploy-steps { display: flex; flex-direction: column; gap: 12px; }
+    .deploy-step { display: flex; gap: 12px; align-items: flex-start; }
+    .deploy-step-num { width: 24px; height: 24px; border-radius: 6px; background: #2a2a2a; color: #999; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .deploy-step-text { font-size: 13px; color: #999; line-height: 1.5; }
+    .deploy-step-text strong { color: white; display: block; margin-bottom: 2px; }
+
+    /* FAQ */
+    .faq { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; }
+    .faq h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2rem; text-align: center; }
+    .faq-item { border-bottom: 1px solid #f0f0f0; padding: 1.25rem 0; cursor: pointer; }
+    .faq-question { font-size: 15px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; }
+    .faq-answer { font-size: 14px; color: #666; line-height: 1.7; margin-top: 0.75rem; display: none; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-chevron { transition: transform 0.2s; font-size: 18px; color: #999; }
+
+    /* Footer */
+    footer { border-top: 1px solid #f0f0f0; padding: 2rem; text-align: center; font-size: 13px; color: #999; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-brand">Fieldstone</div>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#pricing" class="nav-cta">Get Fieldstone</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">Built for small architecture firms</div>
+    <h1>Know your firm's risks <span>before they become problems</span></h1>
+    <p>Fieldstone monitors storage, security, backups, licensing, and operational risks across your tools — and sends a clear daily summary to your inbox every morning.</p>
+    <div class="hero-ctas">
+      <a href="#pricing" class="btn-primary">Get Fieldstone — from $129</a>
+      <a href="#how-it-works" class="btn-secondary">See how it works</a>
+    </div>
+    <div class="hero-note">One-time purchase · Self-hosted in your Azure environment · No subscription</div>
+  </div>
+
+  <!-- Dashboard preview -->
+  <div class="preview">
+    <div class="preview-inner">
+      <div class="preview-bar">
+        <div class="preview-dot" style="background:#ff5f57;"></div>
+        <div class="preview-dot" style="background:#febc2e;"></div>
+        <div class="preview-dot" style="background:#28c840;"></div>
+      </div>
+      <div class="preview-screen">
+        <div class="preview-topbar">
+          <div>
+            <div class="preview-title">Mercer + Holt Architecture</div>
+            <div style="font-size:10px; color:#999;">Risk Console — Daily Overview</div>
+          </div>
+          <div class="preview-sync"><div class="preview-pulse"></div> Live · Last sync 3 min ago</div>
+        </div>
+        <div class="preview-metrics">
+          <div class="preview-metric">
+            <div class="preview-metric-label">Storage used</div>
+            <div class="preview-metric-val">78%</div>
+            <div class="preview-metric-sub" style="color:#d97706;">↑ 4% this month</div>
+          </div>
+          <div class="preview-metric">
+            <div class="preview-metric-label">Security score</div>
+            <div class="preview-metric-val">B+</div>
+            <div class="preview-metric-sub" style="color:#d97706;">2 open issues</div>
+          </div>
+          <div class="preview-metric">
+            <div class="preview-metric-label">Backup health</div>
+            <div class="preview-metric-val">92%</div>
+            <div class="preview-metric-sub" style="color:#16a34a;">All critical files</div>
+          </div>
+          <div class="preview-metric">
+            <div class="preview-metric-label">Op. risks</div>
+            <div class="preview-metric-val">3</div>
+            <div class="preview-metric-sub" style="color:#d97706;">1 high severity</div>
+          </div>
+          <div class="preview-metric">
+            <div class="preview-metric-label">Licenses expiring</div>
+            <div class="preview-metric-val">3</div>
+            <div class="preview-metric-sub" style="color:#dc2626;">Within 60 days</div>
+          </div>
+        </div>
+        <div class="preview-panels">
+          <div class="preview-panel">
+            <div class="preview-panel-title">Storage <span class="preview-badge preview-badge-warn">Attention</span></div>
+            <div class="preview-prog-label"><span>SharePoint</span><span style="color:#dc2626;">91%</span></div>
+            <div class="preview-prog"><div class="preview-prog-fill" style="width:91%; background:#dc2626;"></div></div>
+            <div class="preview-prog-label"><span>Dropbox</span><span style="color:#16a34a;">62%</span></div>
+            <div class="preview-prog"><div class="preview-prog-fill" style="width:62%; background:#16a34a;"></div></div>
+            <div class="preview-prog-label"><span>Local NAS</span><span style="color:#d97706;">74%</span></div>
+            <div class="preview-prog"><div class="preview-prog-fill" style="width:74%; background:#d97706;"></div></div>
+          </div>
+          <div class="preview-panel">
+            <div class="preview-panel-title">Security <span class="preview-badge preview-badge-warn">2 issues</span></div>
+            <div class="preview-issue"><div class="preview-dot-sm" style="background:#dc2626;"></div>MFA not enforced for 4 contractor accounts</div>
+            <div class="preview-issue"><div class="preview-dot-sm" style="background:#d97706;"></div>SSL certificate expires in 18 days</div>
+            <div class="preview-issue"><div class="preview-dot-sm" style="background:#16a34a;"></div>All devices running current OS patch</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section" id="how-it-works">
+    <div class="section-label">How it works</div>
+    <h2>Set up once. Know everything, every day.</h2>
+    <p>Fieldstone connects to your firm's existing tools and surfaces what matters — without you having to check each system manually.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Purchase and deploy</h3>
+        <p>Buy a license and click Deploy to Azure. Fieldstone installs in your firm's own Azure environment in about 10 minutes — no technical expertise required.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Connect your tools</h3>
+        <p>Use the step-by-step connector wizard to link Fieldstone to your existing systems — SharePoint, Dropbox, Autodesk, AWS, and more.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Get your daily digest</h3>
+        <p>Every morning at 9am, Fieldstone sends a clear summary of your firm's risk status to your inbox. No dashboards to check — just open your email.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Risk categories -->
+  <div class="categories">
+    <div class="categories-inner">
+      <div class="section-label">What Fieldstone monitors</div>
+      <h2 style="font-size:32px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1rem;">Five risk areas. One dashboard.</h2>
+      <div class="cat-grid">
+        <div class="cat-card">
+          <div class="cat-icon" style="background:#e3f2fd;">💾</div>
+          <div class="cat-title">Storage</div>
+          <div class="cat-desc">Track usage across SharePoint, Dropbox, and on-premise storage. Get warned before systems hit capacity.</div>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon" style="background:#e8f5e9;">🔒</div>
+          <div class="cat-title">Security</div>
+          <div class="cat-desc">Monitor MFA enforcement, SSL certificates, and device compliance. Know your security posture at a glance.</div>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon" style="background:#fff3e0;">☁️</div>
+          <div class="cat-title">Backups</div>
+          <div class="cat-desc">Track backup job status across all systems. Get alerted when a job fails or falls behind schedule.</div>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon" style="background:#f3e5f5;">📋</div>
+          <div class="cat-title">Licensing</div>
+          <div class="cat-desc">Never let a Revit or Adobe license expire unexpectedly. See renewal dates for all your software in one place.</div>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon" style="background:#fce4ec;">⚠️</div>
+          <div class="cat-title">Operational risks</div>
+          <div class="cat-desc">Track single points of failure, missing documentation, and business continuity gaps that don't fit neatly into other categories.</div>
+        </div>
+        <div class="cat-card" style="background:#f5f5f5; border: none;">
+          <div class="cat-icon" style="background:white;">🔌</div>
+          <div class="cat-title">Connector library</div>
+          <div class="cat-desc">Connect to SharePoint, Entra ID, Dropbox, AWS S3, Autodesk, Bluebeam, Veeam, and more — with new connectors added regularly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Digest preview -->
+  <div class="digest-section">
+    <div>
+      <div class="section-label">Daily digest</div>
+      <h2 style="font-size:28px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1rem;">Your morning briefing, in your inbox</h2>
+      <p style="font-size:15px; color:#666; line-height:1.7; margin-bottom:1.5rem;">Every morning at 9am, Fieldstone sends a plain-English summary of your firm's risk status. No logins, no dashboards — just the information you need to start the day.</p>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px;">
+        <li style="font-size:14px; color:#444; display:flex; align-items:center; gap:8px;"><span style="color:#16a34a;">✓</span> Traffic-light summary for each risk area</li>
+        <li style="font-size:14px; color:#444; display:flex; align-items:center; gap:8px;"><span style="color:#16a34a;">✓</span> Specific action items that need attention today</li>
+        <li style="font-size:14px; color:#444; display:flex; align-items:center; gap:8px;"><span style="color:#16a34a;">✓</span> Send to multiple recipients — office manager, principal, IT consultant</li>
+        <li style="font-size:14px; color:#444; display:flex; align-items:center; gap:8px;"><span style="color:#16a34a;">✓</span> Also posts to Microsoft Teams (optional)</li>
+      </ul>
+    </div>
+    <div class="digest-email">
+      <div class="digest-email-inner">
+        <div class="digest-header">
+          <div class="digest-header-title">Fieldstone</div>
+          <div class="digest-header-sub">Daily Risk Digest — Monday, June 1</div>
+        </div>
+        <div class="digest-body">
+          <div class="digest-section-title">Risk Summary</div>
+          <div class="digest-row"><span>Storage</span><div style="display:flex;align-items:center;gap:6px;"><div class="digest-dot" style="background:#d97706;"></div><span style="font-size:11px;color:#666;">78% used</span></div></div>
+          <div class="digest-row"><span>Security</span><div style="display:flex;align-items:center;gap:6px;"><div class="digest-dot" style="background:#d97706;"></div><span style="font-size:11px;color:#666;">2 issues</span></div></div>
+          <div class="digest-row"><span>Backups</span><div style="display:flex;align-items:center;gap:6px;"><div class="digest-dot" style="background:#16a34a;"></div><span style="font-size:11px;color:#666;">Healthy</span></div></div>
+          <div class="digest-row"><span>Licensing</span><div style="display:flex;align-items:center;gap:6px;"><div class="digest-dot" style="background:#dc2626;"></div><span style="font-size:11px;color:#666;">3 expiring</span></div></div>
+          <div class="digest-row"><span>Operational</span><div style="display:flex;align-items:center;gap:6px;"><div class="digest-dot" style="background:#d97706;"></div><span style="font-size:11px;color:#666;">3 flagged</span></div></div>
+          <div style="margin-top:12px; margin-bottom:6px;"><div class="digest-section-title">Action needed today</div></div>
+          <div class="digest-action">• MFA not enforced for 4 contractor accounts</div>
+          <div class="digest-action">• Autodesk Revit expires in 18 days</div>
+          <div class="digest-action">• SharePoint at 91% capacity</div>
+          <a href="#" class="digest-cta">View Full Dashboard →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="pricing" id="pricing">
+    <h2>Simple, one-time pricing</h2>
+    <p>No subscriptions. No hosting fees. Pay once, use forever.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">$129 <span>one-time</span></div>
+        <div class="pricing-desc">For firms up to 10 people with a focused set of tools.</div>
+        <ul class="pricing-features">
+          <li>Up to 5 connectors</li>
+          <li>All 5 risk categories</li>
+          <li>Daily email digest</li>
+          <li>Teams webhook</li>
+          <li>Azure one-click deploy</li>
+          <li>Free updates for 1 year</li>
+        </ul>
+        <a href="mailto:hello@fieldstone.app?subject=Fieldstone Starter License" class="pricing-btn pricing-btn-secondary">Get Starter</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-tier">Pro</div>
+        <div class="pricing-price">$199 <span>one-time</span></div>
+        <div class="pricing-desc">For larger studios or firms with more complex toolsets.</div>
+        <ul class="pricing-features">
+          <li>Up to 10 connectors</li>
+          <li>All 5 risk categories</li>
+          <li>Daily email digest</li>
+          <li>Teams webhook</li>
+          <li>Azure one-click deploy</li>
+          <li>Free updates for 1 year</li>
+          <li>Priority email support</li>
+        </ul>
+        <a href="mailto:hello@fieldstone.app?subject=Fieldstone Pro License" class="pricing-btn pricing-btn-primary">Get Pro</a>
+      </div>
+    </div>
+    <div class="pricing-note">Purchases handled via email — you'll receive your license key within 1 business day.</div>
+  </div>
+
+  <!-- Deploy section -->
+  <div class="deploy">
+    <div class="deploy-inner">
+      <div>
+        <h2>Your data stays in your environment</h2>
+        <p>Fieldstone deploys directly into your firm's Azure subscription. Your data never touches our servers — not storage figures, not credentials, not client information.</p>
+        <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ffieldstoneprod.blob.core.windows.net%2Fdownloads%2Fazuredeploy.json" target="_blank" style="display:inline-block; margin-top:0.5rem;">
+          <img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:36px;" />
+        </a>
+      </div>
+      <div class="deploy-steps">
+        <div class="deploy-step">
+          <div class="deploy-step-num">1</div>
+          <div class="deploy-step-text"><strong>Purchase a license</strong>Email us and receive your license key within 1 business day.</div>
+        </div>
+        <div class="deploy-step">
+          <div class="deploy-step-num">2</div>
+          <div class="deploy-step-text"><strong>Click Deploy to Azure</strong>Azure provisions everything automatically in your subscription.</div>
+        </div>
+        <div class="deploy-step">
+          <div class="deploy-step-num">3</div>
+          <div class="deploy-step-text"><strong>Connect your tools</strong>Use the wizard to connect your systems in about 15 minutes.</div>
+        </div>
+        <div class="deploy-step">
+          <div class="deploy-step-num">4</div>
+          <div class="deploy-step-text"><strong>Get your first digest</strong>Tomorrow morning at 9am your first digest arrives in your inbox.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq" id="faq">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">Do I need technical expertise to set up Fieldstone? <span class="faq-chevron">›</span></div>
+      <div class="faq-answer">Your IT consultant or a technically inclined principal can handle the initial Azure deployment — it takes about 15 minutes. After that, the office manager can run Fieldstone day-to-day with no technical knowledge required.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">Do I need an Azure subscription? <span class="faq-chevron">›</span></div>
+      <div class="faq-answer">Yes — Fieldstone deploys into your firm's Azure environment. If you use Microsoft 365, you likely already have an Azure subscription. If not, Azure has a free tier that covers the initial setup, and ongoing costs are typically under $20/month for a small firm.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">What systems can Fieldstone connect to? <span class="faq-chevron">›</span></div>
+      <div class="faq-answer">The current connector library includes Microsoft 365 (SharePoint, Exchange), Microsoft Entra ID, Dropbox Business, AWS S3, Autodesk, Bluebeam Revu, and Veeam. New connectors are added regularly and delivered as free updates.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">Where is our data stored? <span class="faq-chevron">›</span></div>
+      <div class="faq-answer">All data stays within your Azure environment. Fieldstone never sends your storage figures, credentials, or client information to our servers. Your license key is validated once at setup and then works offline forever.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">What does "one-time purchase" mean exactly? <span class="faq-chevron">›</span></div>
+      <div class="faq-answer">You pay once and own the software. There are no monthly fees, no subscription, and no hosting costs from us. You pay Azure directly for the small amount of compute your installation uses (typically under $20/month). Updates are free for 1 year from purchase.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">How do I purchase? <span class="faq-chevron">›</span></div>
+      <div class="faq-answer">Click the Get Starter or Get Pro button and send us an email. We'll reply within 1 business day with a payment link and your license key. We're working on a fully automated purchase flow — coming soon.</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div style="margin-bottom:8px;">© 2026 Fieldstone · Built for architecture firms</div>
+    <div><a href="mailto:hello@fieldstone.app" style="color:#999;">hello@fieldstone.app</a></div>
+  </footer>
+
+  <script>
+    function toggleFaq(el) {
+      el.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
