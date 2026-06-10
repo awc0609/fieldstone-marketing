@@ -5,148 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fieldstone — Risk Management for Architecture Firms</title>
   <meta name="description" content="Fieldstone monitors storage, security, backups, licensing, and operational risks across your firm's tools — and sends a daily digest to your inbox every morning.">
+  
+  <!-- Open Graph / link preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fieldstone-app.com">
+  <meta property="og:title" content="Fieldstone — Risk Management for Architecture Firms">
+  <meta property="og:description" content="Know your firm's risks before they become problems. One-time purchase, self-hosted in your Azure environment.">
+  <meta property="og:image" content="https://fieldstone-app.com/og-image.png">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fieldstone — Risk Management for Architecture Firms">
+  <meta name="twitter:description" content="Know your firm's risks before they become problems. One-time purchase, self-hosted in your Azure environment.">
+  <meta name="twitter:image" content="https://fieldstone-app.com/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a1a; background: white; }
-    a { text-decoration: none; color: inherit; }
-
-    /* Nav */
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: white; z-index: 100; }
-    .nav-brand { font-size: 17px; font-weight: 600; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; font-size: 14px; color: #666; }
-    .nav-links a:hover { color: #1a1a1a; }
-    .nav-cta { background: #1a1a1a; color: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; }
-    .nav-cta:hover { background: #333; }
-
-    /* Hero */
-    .hero { max-width: 900px; margin: 0 auto; padding: 5rem 2rem 4rem; text-align: center; }
-    .hero-badge { display: inline-block; background: #f5f5f5; color: #666; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 1.5rem; }
-    .hero h1 { font-size: 48px; font-weight: 600; line-height: 1.15; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
-    .hero h1 span { color: #666; }
-    .hero p { font-size: 18px; color: #666; line-height: 1.7; max-width: 580px; margin: 0 auto 2rem; }
-    .hero-ctas { display: flex; align-items: center; justify-content: center; gap: 12px; }
-    .btn-primary { background: #1a1a1a; color: white; padding: 12px 24px; border-radius: 8px; font-size: 15px; font-weight: 500; display: inline-block; }
-    .btn-primary:hover { background: #333; }
-    .btn-secondary { background: white; color: #1a1a1a; padding: 12px 24px; border-radius: 8px; font-size: 15px; border: 1px solid #e5e5e5; display: inline-block; }
-    .btn-secondary:hover { background: #f5f5f5; }
-    .hero-note { font-size: 12px; color: #999; margin-top: 1rem; }
-
-    /* Dashboard preview */
-    .preview { max-width: 1000px; margin: 0 auto 5rem; padding: 0 2rem; }
-    .preview-inner { background: #f5f5f5; border-radius: 12px; padding: 2px; }
-    .preview-bar { background: #e5e5e5; border-radius: 10px 10px 0 0; padding: 10px 16px; display: flex; align-items: center; gap: 6px; }
-    .preview-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .preview-screen { background: white; border-radius: 0 0 10px 10px; padding: 1.5rem; }
-    .preview-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
-    .preview-title { font-size: 16px; font-weight: 500; }
-    .preview-sync { font-size: 11px; color: #999; display: flex; align-items: center; gap: 5px; }
-    .preview-pulse { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
-    .preview-metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1rem; }
-    .preview-metric { background: #f5f5f5; border-radius: 6px; padding: 10px 12px; }
-    .preview-metric-label { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
-    .preview-metric-val { font-size: 18px; font-weight: 500; }
-    .preview-metric-sub { font-size: 9px; margin-top: 2px; }
-    .preview-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .preview-panel { border: 1px solid #e5e5e5; border-radius: 6px; padding: 10px 12px; }
-    .preview-panel-title { font-size: 11px; font-weight: 500; margin-bottom: 8px; display: flex; justify-content: space-between; }
-    .preview-badge { font-size: 9px; padding: 2px 6px; border-radius: 3px; }
-    .preview-badge-warn { background: #fef3c7; color: #d97706; }
-    .preview-badge-ok { background: #dcfce7; color: #16a34a; }
-    .preview-badge-danger { background: #fee2e2; color: #dc2626; }
-    .preview-prog-label { display: flex; justify-content: space-between; font-size: 9px; color: #999; margin-bottom: 2px; }
-    .preview-prog { height: 4px; border-radius: 2px; background: #f5f5f5; margin-bottom: 6px; overflow: hidden; }
-    .preview-prog-fill { height: 100%; border-radius: 2px; }
-    .preview-issue { display: flex; gap: 6px; margin-bottom: 6px; font-size: 10px; color: #444; align-items: flex-start; }
-    .preview-dot-sm { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-
-    /* How it works */
-    .section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
-    .section-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
-    .section h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem; }
-    .section p { font-size: 16px; color: #666; line-height: 1.7; max-width: 560px; }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
-    .step { }
-    .step-num { width: 32px; height: 32px; border-radius: 8px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
-    .step h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
-    .step p { font-size: 13px; color: #666; line-height: 1.6; }
-
-    /* Risk categories */
-    .categories { background: #f5f5f5; }
-    .categories-inner { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
-    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 2rem; }
-    .cat-card { background: white; border-radius: 8px; padding: 1.25rem; }
-    .cat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
-    .cat-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
-    .cat-desc { font-size: 13px; color: #666; line-height: 1.6; }
-
-    /* Digest preview */
-    .digest-section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .digest-email { background: #f5f5f5; border-radius: 12px; padding: 2px; }
-    .digest-email-inner { background: white; border-radius: 10px; overflow: hidden; }
-    .digest-header { background: #1a1a1a; padding: 1rem 1.25rem; }
-    .digest-header-title { color: white; font-size: 14px; font-weight: 500; }
-    .digest-header-sub { color: #666; font-size: 11px; margin-top: 2px; }
-    .digest-body { padding: 1rem 1.25rem; }
-    .digest-section-title { font-size: 11px; font-weight: 500; margin-bottom: 8px; }
-    .digest-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 11px; }
-    .digest-row:last-child { border-bottom: none; }
-    .digest-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .digest-action { display: flex; gap: 6px; align-items: flex-start; padding: 6px 0; font-size: 11px; color: #444; }
-    .digest-cta { display: block; text-align: center; background: #1a1a1a; color: white; padding: 8px; border-radius: 6px; font-size: 11px; margin-top: 1rem; }
-
-    /* Pricing */
-    .pricing { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
-    .pricing h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem; }
-    .pricing p { font-size: 16px; color: #666; margin-bottom: 3rem; }
-    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 600px; margin: 0 auto; }
-    .pricing-card { border: 1px solid #e5e5e5; border-radius: 12px; padding: 2rem; text-align: left; }
-    .pricing-card.featured { border-color: #1a1a1a; }
-    .pricing-tier { font-size: 13px; font-weight: 500; color: #999; margin-bottom: 8px; }
-    .pricing-price { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
-    .pricing-price span { font-size: 14px; font-weight: 400; color: #999; }
-    .pricing-desc { font-size: 13px; color: #666; margin-bottom: 1.5rem; line-height: 1.5; }
-    .pricing-features { list-style: none; margin-bottom: 1.5rem; }
-    .pricing-features li { font-size: 13px; color: #444; padding: 5px 0; display: flex; align-items: center; gap: 8px; }
-    .pricing-features li::before { content: "✓"; color: #16a34a; font-weight: 500; }
-    .pricing-btn { display: block; text-align: center; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 500; }
-    .pricing-btn-primary { background: #1a1a1a; color: white; }
-    .pricing-btn-primary:hover { background: #333; }
-    .pricing-btn-secondary { background: white; color: #1a1a1a; border: 1px solid #e5e5e5; }
-    .pricing-btn-secondary:hover { background: #f5f5f5; }
-    .pricing-note { font-size: 12px; color: #999; margin-top: 1.5rem; }
-
-    /* Deploy */
-    .deploy { background: #1a1a1a; }
-    .deploy-inner { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .deploy h2 { font-size: 28px; font-weight: 600; color: white; letter-spacing: -0.02em; margin-bottom: 1rem; }
-    .deploy p { font-size: 15px; color: #999; line-height: 1.7; margin-bottom: 1.5rem; }
-    .deploy-steps { display: flex; flex-direction: column; gap: 12px; }
-    .deploy-step { display: flex; gap: 12px; align-items: flex-start; }
-    .deploy-step-num { width: 24px; height: 24px; border-radius: 6px; background: #2a2a2a; color: #999; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .deploy-step-text { font-size: 13px; color: #999; line-height: 1.5; }
-    .deploy-step-text strong { color: white; display: block; margin-bottom: 2px; }
-
-    /* FAQ */
-    .faq { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; }
-    .faq h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2rem; text-align: center; }
-    .faq-item { border-bottom: 1px solid #f0f0f0; padding: 1.25rem 0; cursor: pointer; }
-    .faq-question { font-size: 15px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; }
-    .faq-answer { font-size: 14px; color: #666; line-height: 1.7; margin-top: 0.75rem; display: none; }
-    .faq-item.open .faq-answer { display: block; }
-    .faq-item.open .faq-chevron { transform: rotate(180deg); }
-    .faq-chevron { transition: transform 0.2s; font-size: 18px; color: #999; }
-
-    /* Footer */
-    footer { border-top: 1px solid #f0f0f0; padding: 2rem; text-align: center; font-size: 13px; color: #999; }
-  </style>
 </head>
 <body>
 
   <!-- Nav -->
   <nav>
-    <div class="nav-brand">Fieldstone</div>
+    <div class="nav-brand" style="display:flex; align-items:center; gap:10px;">   <svg viewBox="0 0 44 48" width="22" height="24" xmlns="http://www.w3.org/2000/svg">     <rect x="2" y="4" width="36" height="8" rx="2.5" fill="#1a1a1a"/>     <rect x="-1" y="16" width="42" height="8" rx="2.5" fill="#1a1a1a" opacity="0.6"/>     <rect x="2" y="28" width="30" height="8" rx="2.5" fill="#1a1a1a" opacity="0.4"/>     <rect x="-2" y="40" width="40" height="8" rx="2.5" fill="#1a1a1a" opacity="0.2"/>   </svg>   Fieldstone </div>
     <div class="nav-links">
       <a href="#how-it-works">How it works</a>
       <a href="#pricing">Pricing</a>
