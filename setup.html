@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fieldstone — Setup Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a1a; background: white; line-height: 1.6; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid #f0f0f0; }
+    .nav-brand { font-size: 17px; font-weight: 600; text-decoration: none; color: #1a1a1a; }
+    .nav-link { font-size: 14px; color: #666; text-decoration: none; }
+    .nav-link:hover { color: #1a1a1a; }
+    .container { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    .guide-header { margin-bottom: 3rem; }
+    .guide-badge { display: inline-block; background: #f5f5f5; color: #666; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; }
+    h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .guide-intro { font-size: 16px; color: #666; line-height: 1.7; }
+    .time-estimate { display: flex; align-items: center; gap: 8px; margin-top: 1rem; font-size: 13px; color: #999; }
+    .steps-nav { display: flex; gap: 8px; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .step-pill { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: #f5f5f5; color: #666; text-decoration: none; }
+    .step-pill:hover { background: #e5e5e5; color: #1a1a1a; }
+    .step-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid #f0f0f0; }
+    .step-section:last-child { border-bottom: none; }
+    .step-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 1.25rem; }
+    .step-num { width: 32px; height: 32px; border-radius: 8px; background: #1a1a1a; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; flex-shrink: 0; margin-top: 2px; }
+    .step-title { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+    .step-subtitle { font-size: 13px; color: #999; }
+    .step-body { margin-left: 48px; }
+    .step-body p { font-size: 14px; color: #444; margin-bottom: 1rem; line-height: 1.7; }
+    .instruction-list { list-style: none; margin-bottom: 1.25rem; }
+    .instruction-list li { font-size: 14px; color: #444; padding: 6px 0; display: flex; align-items: flex-start; gap: 10px; }
+    .instruction-list li::before { content: counter(step-counter); counter-increment: step-counter; width: 20px; height: 20px; border-radius: 50%; background: #f5f5f5; color: #666; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .instruction-list { counter-reset: step-counter; }
+    .callout { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; font-size: 13px; color: #166534; line-height: 1.6; }
+    .callout.info { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .callout.warn { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+    .code-block { background: #f5f5f5; border-radius: 6px; padding: 12px 16px; font-family: monospace; font-size: 13px; color: #1a1a1a; margin-bottom: 1.25rem; word-break: break-all; }
+    .field-table { width: 100%; border-collapse: collapse; margin-bottom: 1.25rem; font-size: 13px; }
+    .field-table th { text-align: left; padding: 8px 12px; background: #f5f5f5; font-weight: 500; color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .field-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    .field-table td:first-child { font-weight: 500; white-space: nowrap; }
+    .field-table td:last-child { color: #666; }
+    .badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: 500; margin-left: 6px; }
+    .badge-required { background: #fee2e2; color: #dc2626; }
+    .badge-optional { background: #f5f5f5; color: #999; }
+    .screenshot-placeholder { background: #f5f5f5; border: 1px solid #e5e5e5; border-radius: 8px; padding: 2rem; text-align: center; font-size: 13px; color: #999; margin-bottom: 1.25rem; }
+    .deploy-btn { display: inline-block; margin-bottom: 1.25rem; }
+    .help-section { background: #1a1a1a; border-radius: 12px; padding: 2rem; margin-top: 3rem; text-align: center; }
+    .help-section h2 { color: white; font-size: 20px; margin-bottom: 0.5rem; }
+    .help-section p { color: #999; font-size: 14px; margin-bottom: 1.25rem; }
+    .help-btn { display: inline-block; background: white; color: #1a1a1a; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; text-decoration: none; }
+    .help-btn:hover { background: #f5f5f5; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://fieldstone-app.com" class="nav-brand">Fieldstone</a>
+    <a href="https://fieldstone-app.com" class="nav-link">← Back to fieldstone-app.com</a>
+  </nav>
+
+  <div class="container">
+
+    <div class="guide-header">
+      <div class="guide-badge">Setup Guide</div>
+      <h1>Getting Fieldstone up and running</h1>
+      <p class="guide-intro">This guide walks you through everything you need to install Fieldstone in your firm's Microsoft Azure environment. You don't need to be technical — just follow each step in order.</p>
+      <div class="time-estimate">⏱ Estimated time: 15–20 minutes</div>
+    </div>
+
+    <div class="steps-nav">
+      <a href="#step1" class="step-pill">1. What you'll need</a>
+      <a href="#step2" class="step-pill">2. Create an App Registration</a>
+      <a href="#step3" class="step-pill">3. Get your credentials</a>
+      <a href="#step4" class="step-pill">4. Deploy Fieldstone</a>
+      <a href="#step5" class="step-pill">5. First login</a>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step-section" id="step1">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">What you'll need before you start</div>
+          <div class="step-subtitle">Make sure you have these ready</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Before deploying Fieldstone, make sure you have the following:</p>
+        <ul class="instruction-list">
+          <li>A Microsoft Azure account. If your firm uses Microsoft 365, you likely already have one. Go to <strong>portal.azure.com</strong> and sign in with your Microsoft work account to check.</li>
+          <li>Your Fieldstone license key. This was emailed to you when you purchased — it looks like <strong>FLDS-XXXX-XXXX-XXXX-XXXX</strong>.</li>
+          <li>About 15–20 minutes of uninterrupted time.</li>
+        </ul>
+        <div class="callout info">
+          <strong>Don't have an Azure account?</strong> Go to <strong>azure.microsoft.com</strong> and click "Start free". Microsoft gives you $200 in free credit to get started, and Fieldstone's ongoing Azure costs are typically under $20/month.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-section" id="step2">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Create an App Registration in Azure</div>
+          <div class="step-subtitle">This allows Fieldstone to connect to your Microsoft systems</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>An App Registration is how you give Fieldstone permission to read data from your Microsoft environment — things like SharePoint storage and user security settings. Think of it as creating a set of keys that Fieldstone can use to access your data.</p>
+
+        <div class="callout">
+          Fieldstone only ever requests <strong>read-only</strong> access. It cannot modify, delete, or change anything in your Microsoft environment.
+        </div>
+
+        <ol class="instruction-list">
+          <li>Go to <strong>portal.azure.com</strong> and sign in.</li>
+          <li>In the search bar at the top, type <strong>Microsoft Entra ID</strong> and click it in the results.</li>
+          <li>In the left menu, click <strong>App registrations</strong>.</li>
+          <li>Click <strong>+ New registration</strong> at the top.</li>
+          <li>Fill in the form:
+            <br><br>
+            <strong>Name:</strong> Fieldstone<br>
+            <strong>Supported account types:</strong> Select "Accounts in this organizational directory only"<br>
+            <strong>Redirect URI:</strong> Select "Web" and enter your Fieldstone dashboard URL (you'll get this after deploying in Step 4 — come back and add it then)
+          </li>
+          <li>Click <strong>Register</strong>.</li>
+        </ol>
+
+        <div class="callout warn">
+          After clicking Register, you'll see an overview page. <strong>Keep this page open</strong> — you'll need values from it in the next step.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-section" id="step3">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Get your three credentials</div>
+          <div class="step-subtitle">You'll need these to complete the deployment</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Fieldstone needs three values from your App Registration. Here's exactly where to find each one:</p>
+
+        <table class="field-table">
+          <tr>
+            <th>What Fieldstone calls it</th>
+            <th>Where to find it</th>
+          </tr>
+          <tr>
+            <td>Azure Client ID <span class="badge badge-required">Required</span></td>
+            <td>On the App Registration overview page, look for <strong>Application (client) ID</strong>. It's a long string of letters and numbers with dashes, e.g. <code>dc7eb538-7b05-4799-83d6-f7ad3f074f3d</code>. Copy it exactly.</td>
+          </tr>
+          <tr>
+            <td>Azure Tenant ID <span class="badge badge-required">Required</span></td>
+            <td>On the same overview page, look for <strong>Directory (tenant) ID</strong>. It looks similar to the Client ID. Copy it.</td>
+          </tr>
+          <tr>
+            <td>Azure Client Secret <span class="badge badge-required">Required</span></td>
+            <td>This one requires an extra step — see below.</td>
+          </tr>
+        </table>
+
+        <p><strong>To get your Client Secret:</strong></p>
+        <ol class="instruction-list">
+          <li>In the left menu of your App Registration, click <strong>Certificates & secrets</strong>.</li>
+          <li>Click <strong>+ New client secret</strong>.</li>
+          <li>Give it a description — e.g. <strong>Fieldstone Secret</strong> — and set expiry to <strong>24 months</strong>.</li>
+          <li>Click <strong>Add</strong>.</li>
+          <li>You'll see a new secret appear. Copy the value in the <strong>Value</strong> column immediately — <strong>it will only be shown once</strong> and disappears when you navigate away.</li>
+        </ol>
+
+        <div class="callout warn">
+          <strong>Important:</strong> Copy the <strong>Value</strong> column, not the Secret ID column. The Value is a longer string. If you navigate away before copying it, you'll need to delete it and create a new one.
+        </div>
+
+        <p>Once you have all three values, paste them somewhere safe (like a notes app) before moving to the next step.</p>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-section" id="step4">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Deploy Fieldstone to Azure</div>
+          <div class="step-subtitle">One click to install everything in your environment</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Click the button below to open the Azure deployment form. Azure will automatically create everything Fieldstone needs — the dashboard, database, and security vault — inside your own Azure subscription.</p>
+
+        <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ffieldstoneprod.blob.core.windows.net%2Fdownloads%2Fazuredeploy.json" target="_blank" class="deploy-btn">
+          <img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:40px;">
+        </a>
+
+        <p>Fill in the deployment form using the values you gathered in the previous steps:</p>
+
+        <table class="field-table">
+          <tr>
+            <th>Field</th>
+            <th>What to enter</th>
+          </tr>
+          <tr>
+            <td>Subscription</td>
+            <td>Your Azure subscription — should already be selected.</td>
+          </tr>
+          <tr>
+            <td>Resource group</td>
+            <td>Click <strong>Create new</strong> and type <strong>fieldstone-prod</strong>.</td>
+          </tr>
+          <tr>
+            <td>Region</td>
+            <td>Choose the region closest to your firm — <strong>East US</strong> works well for most US firms.</td>
+          </tr>
+          <tr>
+            <td>App Name</td>
+            <td>Type <strong>fieldstone</strong> or your firm name — e.g. <strong>mercerholt-fieldstone</strong>.</td>
+          </tr>
+          <tr>
+            <td>License Key</td>
+            <td>Paste your Fieldstone license key — e.g. <strong>FLDS-XXXX-XXXX-XXXX-XXXX</strong>.</td>
+          </tr>
+          <tr>
+            <td>Admin Email</td>
+            <td>The email address where you want the daily digest sent.</td>
+          </tr>
+          <tr>
+            <td>Azure Client Id</td>
+            <td>Paste the <strong>Application (client) ID</strong> from Step 3.</td>
+          </tr>
+          <tr>
+            <td>Azure Client Secret</td>
+            <td>Paste the <strong>Client Secret value</strong> from Step 3.</td>
+          </tr>
+          <tr>
+            <td>Azure Tenant Id</td>
+            <td>Paste the <strong>Directory (tenant) ID</strong> from Step 3.</td>
+          </tr>
+          <tr>
+            <td>Sendgrid Api Key <span class="badge badge-optional">Optional</span></td>
+            <td>Only needed if you want email digests. Create a free account at <strong>sendgrid.com</strong> and paste your API key here.</td>
+          </tr>
+          <tr>
+            <td>Teams Webhook Url <span class="badge badge-optional">Optional</span></td>
+            <td>Only needed if you want digest posts in a Teams channel. Leave blank for now.</td>
+          </tr>
+        </table>
+
+        <ol class="instruction-list">
+          <li>Click <strong>Review + create</strong> at the bottom.</li>
+          <li>Click <strong>Create</strong> to start the deployment.</li>
+          <li>Wait about 5 minutes for Azure to finish. You'll see a "Your deployment is complete" message.</li>
+          <li>Click <strong>Go to resource group</strong> and find the App Service resource. Click on it and note the URL — it will look like <strong>fieldstone-abc123.azurewebsites.net</strong>. This is your dashboard URL.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step-section" id="step5">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Add your dashboard URL and sign in</div>
+          <div class="step-subtitle">Final step — connect your App Registration to your dashboard</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <p>Before you can sign in, you need to tell your App Registration where your Fieldstone dashboard lives.</p>
+
+        <ol class="instruction-list">
+          <li>Go back to your App Registration in the Azure portal (search for <strong>Microsoft Entra ID → App registrations → Fieldstone</strong>).</li>
+          <li>In the left menu click <strong>Authentication</strong>.</li>
+          <li>Under <strong>Redirect URIs</strong> click <strong>Add URI</strong>.</li>
+          <li>Paste your dashboard URL followed by <strong>/auth/callback</strong> — e.g. <code>https://fieldstone-abc123.azurewebsites.net/auth/callback</code></li>
+          <li>Click <strong>Save</strong>.</li>
+        </ol>
+
+        <p>Now go to your dashboard URL in a browser. You'll be redirected to a Microsoft sign-in page. Sign in with your Microsoft work account and accept the permissions — Fieldstone will ask for read-only access to your Microsoft data.</p>
+
+        <div class="callout">
+          <strong>You're in!</strong> Your Fieldstone dashboard is now live. Head to the <strong>Connectors</strong> page to start connecting your tools and pulling live data into the dashboard.
+        </div>
+
+        <p>Your first daily digest will arrive tomorrow morning at 9am at the email address you configured.</p>
+      </div>
+    </div>
+
+    <!-- Help section -->
+    <div class="help-section">
+      <h2>Need help getting set up?</h2>
+      <p>If you get stuck at any point, email us and we'll help you through it.</p>
+      <a href="mailto:hello@fieldstone-app.com" class="help-btn">Email hello@fieldstone-app.com</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
